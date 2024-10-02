@@ -5,43 +5,63 @@ import data from './data';
 const Accor = () => {
 
     const [selected, setSelected] = useState(null)
-    const [enableMultipleSelected, setEnableMultipleSelected] = useState(true)
+    const [enableMultiSelection, setEnableMultiSelection] = useState(false)
     const [multiple, setMultiple] = useState([])
-
-    const handleSingleClick = (id) =>{
-        // console.log("Button Found")
-        console.log(id)
+    const handleSingleClick = (id) => {
         setSelected(id === selected ? null : id)
     }
 
-    const handleMultiSelected = (id) =>{
-        console.log(id)
+    const handleMultiSelection = (id) => {
+        // console.log(id)
         let copyOfMultiple = [...multiple]
         const findCurrentIndex = copyOfMultiple.indexOf(id)
-        console.log(findCurrentIndex)
+        // console.log(findCurrentIndex) 
+        if (findCurrentIndex === -1) {
+            copyOfMultiple.push(id)
+        } else {
+            copyOfMultiple.splice(id, 1)
+        }
+
+        setMultiple(copyOfMultiple)
     }
+
+    console.log(selected, multiple)
+
     return (
         <div className='flex justify-center'>
             <div className=''>
-                <button onClick={()=>setEnableMultipleSelected(enableMultipleSelected)}>Enable Multi Selection</button>
+                <button onClick={() => setEnableMultiSelection(!enableMultiSelection)} className='h-auto w-auto bg-purple-500 from-neutral-700'>Enable Multi Selection</button>
                 {data && data.length > 0 ? (
                     data.map(listItem => (
-                        <div className='' onClick={()=>handleSingleClick(listItem.id)} key={listItem.id} >
+                        <div className='' onClick={enableMultiSelection ? () => handleMultiSelection(listItem.id) : () => handleSingleClick(listItem.id)} key={listItem.id} >
                             <div className='flex'>
                                 <h3>{listItem.question}</h3>
                                 {
                                     selected === listItem.id ? (<span>-</span>) : (<span>+</span>)
                                 }
-                                
+
                             </div>
                             {
-                            selected === listItem.id ? (
+                                enableMultiSelection ? multiple.indexOf(listItem.id) !== -1 && (
+                                    <div className='h-40 w-[500px] bg-red-400 overflow-auto'>
+                                        {listItem.answer}
+
+                                    </div>
+                                ) : selected === listItem.id && (
+                                    <div className='h-40 w-[500px] bg-red-400 overflow-auto'>
+                                        {listItem.answer}
+
+                                    </div>
+                                )
+                            }
+                            {/* {
+                            selected === listItem.id || enableMultiSelection.indexOf(listItem.id) !== -1 ? (
                                 <div className='h-40 w-[500px] bg-red-400 overflow-auto'>
                                     {listItem.answer}
                                     
                                 </div>
                             ):null
-                        }
+                        } */}
                         </div>
                     ))
                 ) : (
