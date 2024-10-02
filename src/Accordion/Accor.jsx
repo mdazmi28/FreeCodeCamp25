@@ -7,6 +7,8 @@ const Accor = () => {
     const [selected, setSelected] = useState(null)
     const [enableMultiSelection, setEnableMultiSelection] = useState(false)
     const [multiple, setMultiple] = useState([])
+
+
     const handleSingleClick = (id) => {
         setSelected(id === selected ? null : id)
     }
@@ -30,15 +32,20 @@ const Accor = () => {
     return (
         <div className='flex justify-center'>
             <div className=''>
-                <button onClick={() => setEnableMultiSelection(!enableMultiSelection)} className='h-auto w-auto bg-purple-500 from-neutral-700'>Enable Multi Selection</button>
+                <button onClick={() => setEnableMultiSelection(!enableMultiSelection)} className='h-auto w-auto bg-purple-500 from-neutral-700 rounded'>Enable Multi Selection</button>
                 {data && data.length > 0 ? (
                     data.map(listItem => (
                         <div className='' onClick={enableMultiSelection ? () => handleMultiSelection(listItem.id) : () => handleSingleClick(listItem.id)} key={listItem.id} >
                             <div className='flex'>
                                 <h3>{listItem.question}</h3>
                                 {
-                                    selected === listItem.id ? (<span>-</span>) : (<span>+</span>)
+                                    selected === listItem.id && enableMultiSelection ? (<span>-</span>) : (<span>+</span>)
                                 }
+                                {/* {
+                                    enableMultiSelection ? (enableMultiSelection ? multiple.findIndex(listItem.id) !== -1 && (
+                                        <span>-</span>
+                                    ) : selected === listItem.id && (<span>-</span>)) : <span>+</span>
+                                } */}
 
                             </div>
                             {
