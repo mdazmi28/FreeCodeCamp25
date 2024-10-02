@@ -7,6 +7,7 @@ const ColorGenerate = () => {
     const [color, setColor] = useState('#000000')
 
     const randomColorUtility = (length) =>{
+        // console.log(Math.floor(Math.random()*length))
         return Math.floor(Math.random()*length)
     }
 
@@ -25,10 +26,10 @@ const ColorGenerate = () => {
     }
 
     const handleCreateRGBColor = () =>{
-        let red = Math.floor(Math.random() * 256);
-        let green = Math.floor(Math.random() * 256);
-        let blue = Math.floor(Math.random() * 256);
-        console.log(`rgb(${red}, ${green}, ${blue})`)
+        let red = randomColorUtility(256);
+        let green = randomColorUtility(256);
+        let blue = randomColorUtility(256);
+        // console.log(`rgb(${red}, ${green}, ${blue})`)
         let rgb =  `rgb(${red}, ${green}, ${blue})`;
         setColor(rgb)
 
@@ -49,7 +50,8 @@ const ColorGenerate = () => {
         </button>
     </div>
     <div>
-        <h1 className="text-9xl text-white">{color}</h1>
+    {/* <h1 className="text-9xl text-white">{typeOfColor === 'hex' ? "HEX" : "RGB"}</h1> */}
+        <h1 className="text-5xl text-white">{typeOfColor === 'hex' ? "HEX" : "RGB"}: {color}</h1>
     </div>
 </div>
 
